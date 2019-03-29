@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Problema 2</title>
+	</head>
+
+	<body>
+		<center>
+
+		<h1>Problema 2</h1>
+			
+			<form onsubmit="return false">
+                <div>
+                    <div>
+                    	<label>Cantidad de términos: </label>
+                        <input id="cantidadIngresada" type="number" min="0" step="1" required>
+                        <br>
+                        <br>
+                    </div>                 
+                </div>
+                <div>
+                	<br>
+                    <button id="btnCalcular" type="submit" name="action">Calcular PI</button>
+                    <br>
+                    <br>
+                </div>
+
+                <div id="pi"></div>
+                <br>
+
+             </form>
+
+		</center>
+
+		<script type="text/javascript">
+
+			var operaciones =
+		    {
+		    	calcularPI: function()
+		    	{
+		    		return calcularResultado();
+		    	}
+		    }
+
+		    document.getElementById('btnCalcular').addEventListener("click", operaciones.calcularPI, false);
+
+			ocultar_resultado();
+
+			function ocultar_resultado()
+			{
+				document.getElementById('pi').style.visibility = 'hidden';
+				document.getElementById('pi').style.display = 'none';
+			}
+
+			function mostrar_resultado()
+			{
+				document.getElementById('pi').style.visibility = 'visible';
+				document.getElementById('pi').style.display = 'block';
+			}
+
+			function mostrarPI(piObtenido)
+			{
+				document.getElementById('pi').innerHTML = 
+				'<div class="alert alert-primary" role="alert">' + 
+					'<table>' + 
+						'<thead>' + 
+							'<tr>' + 
+								'<th> PI Obtenido </th>' +
+							'</tr>' + 
+						'</thead>' + 
+						'<tbody>' + 
+							'<tr>' + 
+								'<td>' + piObtenido + '</td>' + 
+							'</tr>' + 
+						'</tbody>' + 
+					'</table>' + 
+				'</div>';
+			}
+
+		    function calcularResultado()
+		    {
+		    	var n = parseInt(document.getElementById('cantidadIngresada').value);
+
+		    	if(n && n >= 0)
+		    	{
+		    		var resultado = 1;
+		    		var cont = 1;
+
+	    			for (var i = 0; i < n && cont <= n; i++) 
+		    		{
+		    			var naux = i + 1;
+		    			var numerador = 2*naux;
+
+		    			if(cont%2 != 0 && cont <= n)
+		    			{
+		    				var denominador = 2*naux-1;
+		    				var cociente = numerador/denominador;
+		    				resultado = resultado * cociente;
+		    				cont++;
+		    			}
+
+		    			if(cont%2 == 0 && cont <= n)
+		    			{
+		    				var denominador = 2*naux+1;
+		    				var cociente = numerador/denominador;
+		    				resultado = resultado * cociente;
+		    				cont++;
+		    			}
+		    		}
+
+		    		resultado = 2 * resultado;
+		    		mostrarPI(resultado);
+		    		mostrar_resultado();		
+		    	}
+		    	else
+		    		ocultar_resultado();	    			
+		    }		    
+
+		</script>
+	</body>
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Problema 3</title>
+	</head>
+
+	<body>
+		<center>
+
+		<h1>Problema 3</h1>
+			
+			<form onsubmit="return false">
+                <div>
+                    <div>
+                    	<label>Cantidad de valores: </label>
+                        <input id="nIngresado" type="number" min="1" step="1" required>
+                        <br>
+                        <br>
+                    </div>                 
+                </div>
+                <div>
+                    <button onclick="ingresarValores()" type="submit" name="action">Ingresar Valores</button>
+                    <br>
+                    <br>
+                    <br>
+                </div>
+
+                <div id="valores"></div>
+
+                <div id="resultado"></div>
+                <br>
+
+             </form>
+
+		</center>
+
+		<script type="text/javascript">
+
+			var nIngresado = 0;
+
+			ocultar_valores();
+			ocultar_resultado();
+
+			function ocultar_valores()
+			{
+				document.getElementById('valores').style.visibility = 'hidden';
+				document.getElementById('valores').style.display = 'none';
+			}
+
+			function mostrar_valores()
+			{
+				document.getElementById('valores').style.visibility = 'visible';
+				document.getElementById('valores').style.display = 'block';
+			}
+
+			function ocultar_resultado()
+			{
+				document.getElementById('resultado').style.visibility = 'hidden';
+				document.getElementById('resultado').style.display = 'none';
+			}
+
+			function mostrar_resultado()
+			{
+				document.getElementById('resultado').style.visibility = 'visible';
+				document.getElementById('resultado').style.display = 'block';
+			}
+
+			function agregarValores(listado_txtbox)
+			{
+				document.getElementById('valores').innerHTML = listado_txtbox;
+			}
+
+			function agregarResultado(resultado)
+			{
+				document.getElementById('resultado').innerHTML = 
+				'<div class="alert alert-primary" role="alert">' + 
+					'<table>' + 
+						'<thead>' + 
+							'<tr>' + 
+								'<th> Valor Mayor </th>' +
+								'<th> Valor Menor </th>' +
+								'<th> Media </th>' +
+							'</tr>' + 
+						'</thead>' + 
+						'<tbody>' + 
+							'<tr>' + 
+								'<td>' + resultado[0] + '</td>' +
+								'<td>' + resultado[1] + '</td>' +
+								'<td>' + resultado[2] + '</td>' + 
+							'</tr>' + 
+						'</tbody>' + 
+					'</table>' + 
+				'</div>';
+			}
+
+			function obtenerEncabezado()
+			{
+				var encabezado = 
+	    			'<form onsubmit="return false">' +
+            			'<div>';
+            	return encabezado;
+			}
+
+			function obtenerTxtbox(naux)
+			{
+				var txtbox = 
+					'<div>' + 
+	    				'<label>Número '+ naux + ': </label>' + 
+	    				'<input id="valor' + naux + '" type="number" required>' + 
+                		'<br>' + 
+                		'<br>' +
+            		'</div>';
+            	return txtbox;
+			}
+
+			function obtenerPie()
+			{
+				var pie =
+		    		'</div>' +
+            			'<div>' +
+                		'<button onclick="calcularPosiciones()" type="submit" name="action">Calcular Posiciones</button>' + 
+                		'<br>' +
+                		'<br>' +
+                		'<br>' +
+            		'</div>';
+            	return pie;
+			}
+
+			function leerValores(valores)
+			{
+				var valores = [];
+
+		    	for (var i = 0; i < nIngresado; i++) 
+		    	{
+		    		var numero = parseFloat(document.getElementById('valor' + (i+1)).value);
+		    		if(numero)
+		    			valores[i] = numero;
+		    		else
+		    		{
+		    			valores = [];
+		    			break;
+		    		}
+		    	}
+		    	return valores;
+			}
+
+			function calcularMayor(valores)
+			{
+				var mayor = parseFloat(valores[0]);
+
+				for (var i = 0; i < nIngresado; i++) 
+				{
+					if((i+1) == nIngresado)
+						break;
+					else if(valores[i+1] > mayor)
+						mayor = valores[i+1];
+				}
+				return mayor;
+			}
+
+			function calcularMenor(valores)
+			{
+				var menor = valores[0];
+
+				for (var i = 0; i < nIngresado; i++) 
+				{
+					if((i+1) == nIngresado)
+						break;
+					else if(valores[i+1] < menor)
+						menor = valores[i+1];
+				}
+				return menor;
+			}
+
+			function calcularMedia(valores)
+			{
+				var media = 0, suma = 0;
+
+				for (var i = 0; i < nIngresado; i++)
+					suma = valores[i] + suma;
+
+				media = suma/nIngresado;
+				return media;
+			}
+
+		    function calcularPosiciones()
+		    {
+		    	var valores = [];
+
+		    	valores = leerValores();
+
+		    	if(valores.length > 0)
+		    	{
+		    		var resultado = [];
+		    		var mayor = calcularMayor(valores);
+		    		var menor = calcularMenor(valores);
+		    		var media = calcularMedia(valores);
+
+		    		resultado.push(mayor);
+		    		resultado.push(menor);
+		    		resultado.push(media);
+		    		agregarResultado(resultado);
+		    		mostrar_resultado();
+		    	}
+		    	else
+		    	{
+		    		ocultar_resultado();
+		    	} 			
+		    }
+
+		    function obtenerFragmentoValores()
+		    {
+		    	var listado_txtbox = '';
+		    	var fragmentoValores = '';
+	    		var naux = nIngresado;
+
+	    		var encabezado = obtenerEncabezado();
+
+	    		for (var i = 0; i < nIngresado; i++) 
+		    	{
+		    		listado_txtbox = obtenerTxtbox(naux) + listado_txtbox;
+                	naux--;                  	
+		    	}			    	
+
+		    	var pie = obtenerPie();
+
+            	fragmentoValores = encabezado + listado_txtbox + pie;
+            	return fragmentoValores;
+		    }
+
+		    function ingresarValores()
+		    {
+		    	nIngresado = document.getElementById('nIngresado').value;
+
+		    	if(nIngresado && nIngresado >= 1)
+		    	{
+		    		var fragmentoValores = obtenerFragmentoValores();
+			    	agregarValores(fragmentoValores);
+                    mostrar_valores();
+		    	}
+		    	else
+		    	{
+		    		ocultar_valores();
+		    		ocultar_resultado();
+		    	}
+		    }
+
+		</script>
+	</body>
+</html>

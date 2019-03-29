@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Problema 11</title>
+	</head>
+
+	<body>
+		<center>
+
+		<h1>Problema 11</h1>
+			
+			<form onsubmit="return false">
+                <div>
+                    <div>
+                    	<label>Ingresa el número: </label>
+                        <input id="numero" type="number" required>
+                        <br>
+                        <br>
+                    </div>               
+                </div>
+                <div>
+                	<br>
+                    <button id="btnCalcular" type="submit" name="action">Verificacion Primo</button>
+                    <br>
+                    <br>
+                </div>
+
+                <div id="primo"></div>
+                <br>
+
+             </form>
+
+		</center>
+
+		<script type="text/javascript">
+
+			var operaciones =
+		    {
+		    	calcularPrimo: function()
+		    	{
+		    		return calcularResultado();
+		    	}
+		    }
+
+		    document.getElementById('btnCalcular').addEventListener("click", operaciones.calcularPrimo, false);
+
+			ocultar_resultado();
+
+			function ocultar_resultado()
+			{
+				document.getElementById('primo').style.visibility = 'hidden';
+				document.getElementById('primo').style.display = 'none';
+			}
+
+			function mostrar_resultado()
+			{
+				document.getElementById('primo').style.visibility = 'visible';
+				document.getElementById('primo').style.display = 'block';
+			}
+
+			function mostrarPrimo(verificacionObtenida)
+			{
+				document.getElementById('primo').innerHTML = 
+				'<div class="alert alert-primary" role="alert">' + 
+					'<table>' + 
+						'<thead>' + 
+							'<tr>' + 
+								'<th> Verificacion Primo </th>' +
+							'</tr>' + 
+						'</thead>' + 
+						'<tbody>' + 
+							'<tr>' + 
+								'<td>' + verificacionObtenida + '</td>' + 
+							'</tr>' + 
+						'</tbody>' + 
+					'</table>' + 
+				'</div>';
+			}
+
+		    function calcularResultado()
+		    {
+		    	var numero = parseInt(document.getElementById('numero').value);
+
+		    	if(numero && numero > 0)
+		    	{
+		    		var c = Math.floor(numero/2);
+		    		var candidato = 2;
+		    		var primo = true;
+
+		    		while(primo && candidato <= c)
+		    		{
+		    			if(numero%candidato == 0)
+		    				primo = false;
+		    			candidato = candidato + 1;
+		    		}
+		    		if(primo)
+		    			var res = 'El numero es primo';
+		    		else
+		    			var res = 'El numero no es primo';
+		    		mostrarPrimo(res);
+	    			mostrar_resultado();		
+		    	}
+		    	else
+		    	{
+		    		ocultar_resultado();	    			
+		    	}
+		    }		    
+
+		</script>
+	</body>
+</html>

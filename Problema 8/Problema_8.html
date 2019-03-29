@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Problema 8</title>
+	</head>
+
+	<body>
+		<center>
+
+		<h1>Problema 8</h1>
+			
+			<form onsubmit="return false">
+                <div>
+                    <div>
+                    	<label>Valor de X: </label>
+                        <input id="xIngresado" type="number" required>
+                        <br>
+                        <br>
+                    </div>                 
+                </div>
+                <div>
+                	<br>
+                    <button id="btnCalcular" type="submit" name="action">Obtener e^x</button>
+                    <br>
+                    <br>
+                </div>
+
+                <div id="suma"></div>
+                <br>
+
+             </form>
+
+		</center>
+
+		<script type="text/javascript">
+
+			var operaciones =
+		    {
+		    	calcularSuma: function()
+		    	{
+		    		return calcularResultado();
+		    	}
+		    }
+
+		    document.getElementById('btnCalcular').addEventListener("click", operaciones.calcularSuma, false);
+
+			ocultar_resultado();
+
+			function ocultar_resultado()
+			{
+				document.getElementById('suma').style.visibility = 'hidden';
+				document.getElementById('suma').style.display = 'none';
+			}
+
+			function mostrar_resultado()
+			{
+				document.getElementById('suma').style.visibility = 'visible';
+				document.getElementById('suma').style.display = 'block';
+			}
+
+			function mostrarSuma(sumaObtenida)
+			{
+				document.getElementById('suma').innerHTML = 
+				'<div class="alert alert-primary" role="alert">' + 
+					'<table>' + 
+						'<thead>' + 
+							'<tr>' + 
+								'<th> Suma Obtenida </th>' +
+							'</tr>' + 
+						'</thead>' + 
+						'<tbody>' + 
+							'<tr>' + 
+								'<td>' + sumaObtenida + '</td>' + 
+							'</tr>' + 
+						'</tbody>' + 
+					'</table>' + 
+				'</div>';
+			}
+
+			function fact(num)
+			{
+			    if (num === 0)
+			      { return 1; }
+			    else
+			      { return num * fact( num - 1 ); }
+			}
+
+		    function calcularResultado()
+		    {
+		    	var xIngresado = parseInt(document.getElementById('xIngresado').value);
+
+		    	if(xIngresado)
+		    	{
+		    		var suma = 0;
+		    		var cadena = '';
+		    		for (var i = 0; i < 101; i++) 
+		    		{
+		    			var numerador = Math.pow(xIngresado, i);
+		    			var denominador = fact(i);
+		    			fraccion = numerador/denominador;
+		    			suma = suma + fraccion;
+		    			cadena = cadena + 'Valor ' + (i+1) + ': ' + suma + '<br>';
+		    		}
+		    		mostrarSuma(cadena);
+		    		mostrar_resultado();		
+		    	}
+		    	else
+		    		ocultar_resultado();	    			
+		    }		    
+
+		</script>
+	</body>
+</html>

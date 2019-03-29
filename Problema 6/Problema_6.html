@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Problema 6</title>
+	</head>
+
+	<body>
+		<center>
+
+		<h1>Problema 6</h1>
+			
+			<form onsubmit="return false">
+                <div>
+                    <div>
+                    	<label>Seleccione el orden: </label>
+
+                        <select id='cbxNumero'>
+						 	<option value="3">3</option>
+						 	<option value="5">5</option>
+							<option value="7">7</option>
+							<option value="9">9</option>
+							<option value="11">11</option>
+						</select>
+                        <br>
+                        <br>
+                    </div>                 
+                </div>
+                <div>
+                	<br>
+                    <button id="btnCalcular" type="submit" name="action">Obtener Cuadrado</button>
+                    <br>
+                    <br>
+                </div>
+
+                <div id="cuadrado"></div>
+                <br>
+
+             </form>
+
+		</center>
+
+		<script type="text/javascript">
+
+			var operaciones =
+		    {
+		    	calcularCuadrado: function()
+		    	{
+		    		return calcularResultado();
+		    	}
+		    }
+
+		    document.getElementById('btnCalcular').addEventListener("click", operaciones.calcularCuadrado, false);
+
+			ocultar_resultado();
+
+			function ocultar_resultado()
+			{
+				document.getElementById('cuadrado').style.visibility = 'hidden';
+				document.getElementById('cuadrado').style.display = 'none';
+			}
+
+			function mostrar_resultado()
+			{
+				document.getElementById('cuadrado').style.visibility = 'visible';
+				document.getElementById('cuadrado').style.display = 'block';
+			}
+
+			function mostrarCuadrado(tabla)
+			{
+				document.getElementById('cuadrado').innerHTML = tabla;
+			}
+
+			function generarEncabezado()
+			{
+				var encabezado = 
+				'<div>' + 
+					'<table>' + 
+						'<tbody>';
+				return encabezado;
+			}
+
+			function generarFilas(matriz, orden)
+			{
+				var fragmentoTabla = '';
+
+				for (var i = 0; i < orden; i++) 
+				{
+					fragmentoTabla = fragmentoTabla + '<tr>'; 
+					for (var j = 0; j < orden; j++) 
+					{
+						fragmentoTabla = fragmentoTabla + '<td>' + matriz[i][j] + '</td>';
+					}
+					fragmentoTabla = fragmentoTabla + '</tr>';
+				}
+				return fragmentoTabla;
+			}
+
+			function generarPie()
+			{
+				var pie = 
+				'</tbody>' + 
+					'</table>' + 
+				'</div>';
+				return pie;
+			}
+
+			function generarTabla(matriz, orden)
+			{
+				var encabezado = generarEncabezado();
+				var fragmentoTabla = generarFilas(matriz, orden);
+				var pie = generarPie();
+				var tabla = encabezado + fragmentoTabla + pie;
+				return tabla;
+			}
+
+			function crearMatriz(ordenIngresado)
+			{
+				var filas = '';
+				const rows = ordenIngresado;
+				const cols = ordenIngresado;
+				const defaultValue = 0;
+				var matriz = Array(rows).fill(null).map(_ => Array(cols).fill(defaultValue));
+				return matriz;
+			}
+
+			function mostrarMatriz(matriz, orden)
+			{
+				var filas = '';
+	    		for (var i = orden - 1; i > -1; i--) 
+	    		{
+			        for (var j = orden - 1; j > -1; j--) 
+			        {
+			            filas = matriz[i][j] + ' ' + filas;
+			        }
+			        filas = '</br>' + filas;
+			    }
+			    return filas;
+			}
+
+			function calcularFilaNueva(pos_fila_actual, orden)
+			{
+				var pos_fila_nueva = pos_fila_actual - 1;
+    			if(pos_fila_nueva == -1)
+    				pos_fila_nueva = orden - 1;
+    			return pos_fila_nueva;
+			}
+
+			function calcularColumnaNueva(pos_columna_actual, orden)
+			{
+				var pos_columna_nueva = pos_columna_actual + 1;
+    			if(pos_columna_nueva == orden)
+    				pos_columna_nueva = 0;
+    			return pos_columna_nueva;
+			}
+
+		    function calcularResultado()
+		    {
+		    	var cuadrado = [,];
+		    	var cont = 1;
+		    	var orden = parseInt(document.getElementById('cbxNumero').value);
+		    		
+	    		var matriz = crearMatriz(orden);
+
+	    		var mitadfila = parseInt(orden/2);
+	    		var pos_fila_actual = 0;
+	    		var pos_columna_actual = mitadfila;
+	    		matriz[pos_fila_actual][pos_columna_actual] = cont;
+
+	    		var ncuadrado = Math.pow(orden, 2);
+
+	    		for (var cont = 2; cont <= ncuadrado; cont++) 
+	    		{
+	    			var pos_fila_nueva = calcularFilaNueva(pos_fila_actual, orden);
+	    			
+	    			var pos_columna_nueva = calcularColumnaNueva(pos_columna_actual, orden);
+
+	    			if(matriz[pos_fila_nueva][pos_columna_nueva] != 0)
+	    			{
+	    				pos_fila_nueva = pos_fila_actual + 1;
+	    				matriz[pos_fila_nueva][pos_columna_actual] = cont;
+	    				pos_fila_actual = pos_fila_nueva;
+	    			}
+	    			else
+	    			{
+	    				matriz[pos_fila_nueva][pos_columna_nueva] = cont;
+	    				pos_fila_actual = pos_fila_nueva;
+	    				pos_columna_actual = pos_columna_nueva;
+	    			}
+		    	}
+
+		    	var tabla = generarTabla(matriz, orden);
+	    		mostrarCuadrado(tabla);
+	    		mostrar_resultado();		    			
+		    }		    
+
+		</script>
+	</body>
+</html>

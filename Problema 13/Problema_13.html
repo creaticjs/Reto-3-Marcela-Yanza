@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Problema 13</title>
+	</head>
+
+	<body>
+		<center>
+
+		<h1>Problema 13</h1>
+			
+			<form onsubmit="return false">
+                <div>
+                    <div>
+                    	<label>Ingresa el número: </label>
+                        <input id="numero" type="number" required>
+                        <br>
+                        <br>
+                    </div>               
+                </div>
+                <div>
+                	<br>
+                    <button id="btnCalcular" type="submit" name="action">Resultado</button>
+                    <br>
+                    <br>
+                </div>
+
+                <div id="serie"></div>
+                <br>
+
+             </form>
+
+		</center>
+
+		<script type="text/javascript">
+
+			var operaciones =
+		    {
+		    	calcularSerie: function()
+		    	{
+		    		return calcularResultado();
+		    	}
+		    }
+
+		    document.getElementById('btnCalcular').addEventListener("click", operaciones.calcularSerie, false);
+
+			ocultar_resultado();
+
+			function ocultar_resultado()
+			{
+				document.getElementById('serie').style.visibility = 'hidden';
+				document.getElementById('serie').style.display = 'none';
+			}
+
+			function mostrar_resultado()
+			{
+				document.getElementById('serie').style.visibility = 'visible';
+				document.getElementById('serie').style.display = 'block';
+			}
+
+			function mostrarSerie(sumaObtenida)
+			{
+				document.getElementById('serie').innerHTML = 
+				'<div class="alert alert-primary" role="alert">' + 
+					'<table>' + 
+						'<thead>' + 
+							'<tr>' + 
+								'<th> Resultado Suma </th>' +
+							'</tr>' + 
+						'</thead>' + 
+						'<tbody>' + 
+							'<tr>' + 
+								'<td>' + sumaObtenida + '</td>' + 
+							'</tr>' + 
+						'</tbody>' + 
+					'</table>' + 
+				'</div>';
+			}
+
+		    function calcularResultado()
+		    {
+		    	var numero = parseInt(document.getElementById('numero').value);
+
+		    	if(numero && numero > 0)
+		    	{
+		    		var suma = 0;
+		    		for (var i = 1; i <= numero; i++) 
+		    		{
+		    			var fraccion = i/Math.pow(2, i);
+		    			suma = suma + fraccion;
+		    		}
+		    		mostrarSerie(suma);
+	    			mostrar_resultado();		
+		    	}
+		    	else
+		    	{
+		    		ocultar_resultado();	    			
+		    	}
+		    }		    
+
+		</script>
+	</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Problema 4</title>
+	</head>
+
+	<body>
+		<center>
+
+		<h1>Problema 4</h1>
+			
+			<form onsubmit="return false">
+                <div>
+                    <div>
+                    	<label>Ingrese el año: </label>
+                        <input id="anioIngresado" type="number" min="1990" max="2000" step="1" required>
+                        <br>
+                        <br>
+                    </div>                 
+                </div>
+                <div>
+                	<br>
+                    <button id="btnCalcular" type="submit" name="action">Obtener Fecha</button>
+                    <br>
+                    <br>
+                </div>
+
+                <div id="fecha"></div>
+                <br>
+
+             </form>
+
+		</center>
+
+		<script type="text/javascript">
+
+			var dia, mes;
+
+			var operaciones =
+		    {
+		    	calcularFecha: function()
+		    	{
+		    		return calcularResultado();
+		    	}
+		    }
+
+		    document.getElementById('btnCalcular').addEventListener("click", operaciones.calcularFecha, false);
+
+			ocultar_resultado();
+
+			function ocultar_resultado()
+			{
+				document.getElementById('fecha').style.visibility = 'hidden';
+				document.getElementById('fecha').style.display = 'none';
+			}
+
+			function mostrar_resultado()
+			{
+				document.getElementById('fecha').style.visibility = 'visible';
+				document.getElementById('fecha').style.display = 'block';
+			}
+
+			function mostrarFecha(fechaObtenida)
+			{
+				document.getElementById('fecha').innerHTML = 
+				'<div class="alert alert-primary" role="alert">' + 
+					'<table>' + 
+						'<thead>' + 
+							'<tr>' + 
+								'<th> Fecha Obtenida </th>' +
+							'</tr>' + 
+						'</thead>' + 
+						'<tbody>' + 
+							'<tr>' + 
+								'<td>' + fechaObtenida + '</td>' + 
+							'</tr>' + 
+						'</tbody>' + 
+					'</table>' + 
+				'</div>';
+			}
+
+			function obtenerDiaMes(N)
+			{
+				if(N <= 31)
+	    		{
+	    			dia = N;
+	    			mes = 'Marzo';
+	    		}
+	    		else
+	    		{
+	    			dia = N - 31;
+	    			mes = 'Abril'
+	    		}
+			}
+
+		    function calcularResultado()
+		    {
+		    	
+		    	var anioIngresado = parseInt(document.getElementById('anioIngresado').value);
+
+		    	if(anioIngresado && anioIngresado >= 1990 && anioIngresado < 2001)
+		    	{
+		    		var A = anioIngresado%19;
+		    		var B = anioIngresado%4;
+		    		var C = anioIngresado%7;
+		    		var D = (19 * A + 24)%30;
+		    		var E = (2*B + 4*C + 6*D + 5)%7;
+		    		var N = 22 + D + E;
+
+		    		obtenerDiaMes(N);
+		    		var fecha = dia + ' de ' + mes + ' de ' + anioIngresado;
+		    		mostrarFecha(fecha);
+		    		mostrar_resultado();		
+		    	}
+		    	else
+		    		ocultar_resultado();	    			
+		    }		    
+
+		</script>
+	</body>
+</html>

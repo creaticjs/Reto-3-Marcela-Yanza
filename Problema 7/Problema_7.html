@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Problema 7</title>
+	</head>
+
+	<body>
+		<center>
+
+		<h1>Problema 7</h1>
+			
+			<form onsubmit="return false">
+                <div>
+                    <div>
+                    	<label>Cantidad de perfectos a calcular: </label>
+                        <input id="nIngresado" type="number" min="1" max="4" step="1" required>
+                        <br>
+                        <br>
+                    </div>                 
+                </div>
+                <div>
+                	<br>
+                    <button id="btnCalcular" type="submit" name="action">Obtener Números Perfectos</button>
+                    <br>
+                    <br>
+                </div>
+
+                <div id="numeros"></div>
+                <br>
+
+             </form>
+
+		</center>
+
+		<script type="text/javascript">
+
+			var operaciones =
+		    {
+		    	calcularNumeros: function()
+		    	{
+		    		return calcularResultado();
+		    	}
+		    }
+
+		    document.getElementById('btnCalcular').addEventListener("click", operaciones.calcularNumeros, false);
+
+			ocultar_resultado();
+
+			function ocultar_resultado()
+			{
+				document.getElementById('numeros').style.visibility = 'hidden';
+				document.getElementById('numeros').style.display = 'none';
+			}
+
+			function mostrar_resultado()
+			{
+				document.getElementById('numeros').style.visibility = 'visible';
+				document.getElementById('numeros').style.display = 'block';
+			}
+
+			function mostrarNumeros(numerosObtenidos)
+			{
+				document.getElementById('numeros').innerHTML = 
+				'<div class="alert alert-primary" role="alert">' + 
+					'<table>' + 
+						'<thead>' + 
+							'<tr>' + 
+								'<th> Números Obtenidos </th>' +
+							'</tr>' + 
+						'</thead>' + 
+						'<tbody>' + 
+							'<tr>' + 
+								'<td>' + numerosObtenidos + '</td>' + 
+							'</tr>' + 
+						'</tbody>' + 
+					'</table>' + 
+				'</div>';
+			}
+
+			function obtenerDivisores(numevaluar)
+			{
+				var divisores  = [];
+				for(var i = 1; i < numevaluar; i++)
+    			{
+    				var mod = numevaluar%i;
+    				if(mod == 0)
+    				{
+    					divisores.push(i);
+    				}
+    			}
+    			return divisores;
+			}
+
+			function sumarDivisores(divisores)
+			{
+				var suma = 0;
+				for (var i = 0; i < divisores.length; i++) 
+    			{
+    				suma = suma + divisores[i];
+    			}
+    			return suma;
+			}
+
+			function getListadoPerfectos(perfectos)
+			{
+				var listado_perfectos = '';
+				for (var i = 0; i < perfectos.length; i++) 
+    			{
+    				var listado_perfectos = listado_perfectos + perfectos[i] + ' ';
+    			}
+    			return listado_perfectos;
+			}
+
+		    function calcularResultado()
+		    {
+		    	var nIngresado = parseInt(document.getElementById('nIngresado').value);
+
+		    	if(nIngresado && nIngresado > 0 && nIngresado < 5)
+		    	{
+		    		var cont = 1;
+		    		var numevaluar = 1;
+		    		var perfectos  = [];
+		    		var listado_perfectos = '';
+
+		    		while(cont <= nIngresado)
+		    		{
+		    			var suma = 0;
+		    			var divisores  = [];
+
+		    			divisores = obtenerDivisores(numevaluar);
+		    			suma = sumarDivisores(divisores);
+		    			
+		    			if(suma == numevaluar)
+		    			{
+		    				perfectos.push(numevaluar);
+		    				cont++;
+		    			}
+		    			numevaluar++;
+		    		}
+
+		    		listado_perfectos = getListadoPerfectos(perfectos);
+		    		mostrarNumeros(listado_perfectos);
+		    		mostrar_resultado();		
+		    	}
+		    	else
+		    		ocultar_resultado();	    			
+		    }		    
+
+		</script>
+	</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Problema 9-2</title>
+	</head>
+
+	<body>
+		<center>
+
+		<h1>Problema 9-2</h1>
+			
+			<form onsubmit="return false">
+                <div>
+                    <div>
+                    	<label>Ingrese el número de conejos: </label>
+                        <input id="nConejos" type="number" min="1" step="1" required>
+                        <br>
+                        <br>
+                    </div>                 
+                </div>
+                <div>
+                	<br>
+                    <button id="btnCalcular" type="submit" name="action">Obtener Conejos</button>
+                    <br>
+                    <br>
+                </div>
+
+                <div id="conejos"></div>
+                <br>
+
+             </form>
+
+		</center>
+
+		<script type="text/javascript">
+
+			var operaciones =
+		    {
+		    	calcularConejos: function()
+		    	{
+		    		return calcularResultado();
+		    	}
+		    }
+
+		    document.getElementById('btnCalcular').addEventListener("click", operaciones.calcularConejos, false);
+
+			ocultar_resultado();
+
+			function ocultar_resultado()
+			{
+				document.getElementById('conejos').style.visibility = 'hidden';
+				document.getElementById('conejos').style.display = 'none';
+			}
+
+			function mostrar_resultado()
+			{
+				document.getElementById('conejos').style.visibility = 'visible';
+				document.getElementById('conejos').style.display = 'block';
+			}
+
+			function mostrarMeses(mesesObtenidos)
+			{
+				document.getElementById('conejos').innerHTML = 
+				'<div class="alert alert-primary" role="alert">' + 
+					'<table>' + 
+						'<thead>' + 
+							'<tr>' + 
+								'<th> Número de meses necesarios </th>' +
+							'</tr>' + 
+						'</thead>' + 
+						'<tbody>' + 
+							'<tr>' + 
+								'<td>' + mesesObtenidos + '</td>' + 
+							'</tr>' + 
+						'</tbody>' + 
+					'</table>' + 
+				'</div>';
+			}
+
+		    function calcularResultado()
+		    {
+		    	var nConejos = parseInt(document.getElementById('nConejos').value);
+
+		    	if(nConejos && nConejos > 0)
+		    	{
+		    		var meses = parseInt(Math.log2(nConejos));
+		    		console.log('meses = '+meses);
+		    		mostrarMeses(meses);
+		    		mostrar_resultado();		
+		    	}
+		    	else
+		    		ocultar_resultado();  			
+		    }		    
+
+		</script>
+	</body>
+</html>

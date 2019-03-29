@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Problema 14</title>
+	</head>
+
+	<body>
+		<center>
+
+		<h1>Problema 14</h1>
+			
+			<form onsubmit="return false">
+                <div>
+                    <div>
+                    	<label>Ingresa el número: </label>
+                        <input id="numero" type="number" min="1" step="1" required>
+                        <br>
+                        <br>
+                    </div>               
+                </div>
+                <div>
+                	<br>
+                    <button id="btnCalcular" type="submit" name="action">Resultado</button>
+                    <br>
+                    <br>
+                </div>
+
+                <div id="serie"></div>
+                <br>
+
+             </form>
+
+		</center>
+
+		<script type="text/javascript">
+
+			var operaciones =
+		    {
+		    	calcularSerie: function()
+		    	{
+		    		return calcularResultado();
+		    	}
+		    }
+
+		    document.getElementById('btnCalcular').addEventListener("click", operaciones.calcularSerie, false);
+
+			ocultar_resultado();
+
+			function ocultar_resultado()
+			{
+				document.getElementById('serie').style.visibility = 'hidden';
+				document.getElementById('serie').style.display = 'none';
+			}
+
+			function mostrar_resultado()
+			{
+				document.getElementById('serie').style.visibility = 'visible';
+				document.getElementById('serie').style.display = 'block';
+			}
+
+			function mostrarSerie(sumaObtenida)
+			{
+				document.getElementById('serie').innerHTML = 
+				'<div class="alert alert-primary" role="alert">' + 
+					'<table>' + 
+						'<thead>' + 
+							'<tr>' + 
+								'<th> Cadena Obtenida </th>' +
+							'</tr>' + 
+						'</thead>' + 
+						'<tbody>' + 
+							'<tr>' + 
+								'<td>' + sumaObtenida + '</td>' + 
+							'</tr>' + 
+						'</tbody>' + 
+					'</table>' + 
+				'</div>';
+			}
+
+		    function calcularResultado()
+		    {
+		    	var numero = parseInt(document.getElementById('numero').value);
+
+		    	if(numero && numero > 0)
+		    	{
+		    		var cad = '';
+		    		for (var i = 1; i <= numero; i++) 
+		    		{
+		    			for (var j = 0; j < i; j++) 
+		    			{
+		    				cad = cad + '*';
+		    			};
+		    			cad = cad  + '<br>';
+		    		};
+		    		console.log(cad);
+    				mostrarSerie(cad);
+	    			mostrar_resultado();			
+		    	}
+		    	else
+		    	{
+		    		ocultar_resultado();	    			
+		    	}
+		    }		    
+
+		</script>
+	</body>
+</html>

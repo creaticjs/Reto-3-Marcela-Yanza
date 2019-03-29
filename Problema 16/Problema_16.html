@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Problema 16</title>
+	</head>
+
+	<body>
+		<center>
+
+		<h1>Problema 16</h1>
+			
+			<form onsubmit="return false">
+                <div>
+                    <div>
+                    	<label>Ingresa el número a exceder: </label>
+                    	<br>
+                    	<br>
+                        <input id="numerojh" type="number" min="1" step="1" required style="visibility: visible; display:block">
+                        <br>
+                        <br>
+                    </div>               
+                </div>
+                <div>
+                    <button id="btnCalcular" type="submit" name="action">Resultado</button>
+                    <br>
+                    <br>
+                </div>
+
+                <div id="numero"></div>
+                <br>
+
+             </form>
+
+		</center>
+
+		<script type="text/javascript">
+
+			var operaciones =
+		    {
+		    	calcularNumero: function()
+		    	{
+		    		return calcularResultado();
+		    	}
+		    }
+
+		    document.getElementById('btnCalcular').addEventListener("click", operaciones.calcularNumero, false);
+
+			ocultar_resultado();
+
+			function ocultar_resultado()
+			{
+				document.getElementById('numero').style.visibility = 'hidden';
+				document.getElementById('numero').style.display = 'none';
+			}
+
+			function mostrar_resultado()
+			{
+				document.getElementById('numero').style.visibility = 'visible';
+				document.getElementById('numero').style.display = 'block';
+			}
+
+			function mostrarNumero(numeroObtenido)
+			{
+				document.getElementById('numero').innerHTML = 
+				'<div class="alert alert-primary" role="alert">' + 
+					'<table>' + 
+						'<thead>' + 
+							'<tr>' + 
+								'<th> Numero Obtenido </th>' +
+							'</tr>' + 
+						'</thead>' + 
+						'<tbody>' + 
+							'<tr>' + 
+								'<td>' + numeroObtenido + '</td>' + 
+							'</tr>' + 
+						'</tbody>' + 
+					'</table>' + 
+				'</div>';
+			}
+
+		    function calcularResultado()
+		    {
+		    	var numero = parseInt(document.getElementById('numerojh').value);
+
+		    	if(numero && numero > 0)
+		    	{
+		    		var suma = 0, i;
+		    		for (i = 1; i <= numero && suma <= numero; i++) 
+		    		{
+		    			suma = suma + i;
+		    		};
+		    		mostrarNumero(i-1);
+	    			mostrar_resultado();			
+		    	}
+		    	else
+		    	{
+		    		ocultar_resultado();	    			
+		    	}
+		    }		    
+
+		</script>
+	</body>
+</html>

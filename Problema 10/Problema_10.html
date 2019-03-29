@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Problema 10</title>
+	</head>
+
+	<body>
+		<center>
+
+		<h1>Problema 10</h1>
+			
+			<form onsubmit="return false">
+                <div>
+                    <div>
+                    	<label>Primer número: </label>
+                        <input id="numero1" type="number" required>
+                        <br>
+                        <br>
+                    </div>
+                    <div>
+                    	<label>Segundo número: </label>
+                        <input id="numero2" type="number" required>
+                        <br>
+                        <br>
+                    </div>                 
+                </div>
+                <div>
+                	<br>
+                    <button id="btnCalcular" type="submit" name="action">Obtener MCD</button>
+                    <br>
+                    <br>
+                </div>
+
+                <div id="mcd"></div>
+                <br>
+
+             </form>
+
+		</center>
+
+		<script type="text/javascript">
+
+			var operaciones =
+		    {
+		    	calcularMCD: function()
+		    	{
+		    		return calcularResultado();
+		    	}
+		    }
+
+		    document.getElementById('btnCalcular').addEventListener("click", operaciones.calcularMCD, false);
+
+			ocultar_resultado();
+
+			function ocultar_resultado()
+			{
+				document.getElementById('mcd').style.visibility = 'hidden';
+				document.getElementById('mcd').style.display = 'none';
+			}
+
+			function mostrar_resultado()
+			{
+				document.getElementById('mcd').style.visibility = 'visible';
+				document.getElementById('mcd').style.display = 'block';
+			}
+
+			function mostrarMCD(mcdObtenido)
+			{
+				document.getElementById('mcd').innerHTML = 
+				'<div class="alert alert-primary" role="alert">' + 
+					'<table>' + 
+						'<thead>' + 
+							'<tr>' + 
+								'<th> MCD Obtenido </th>' +
+							'</tr>' + 
+						'</thead>' + 
+						'<tbody>' + 
+							'<tr>' + 
+								'<td>' + mcdObtenido + '</td>' + 
+							'</tr>' + 
+						'</tbody>' + 
+					'</table>' + 
+				'</div>';
+			}
+
+		    function calcularResultado()
+		    {
+		    	var numero1 = parseInt(document.getElementById('numero1').value);
+		    	var numero2 = parseInt(document.getElementById('numero2').value);
+
+		    	if(numero1 && numero1 >= 0 && numero2 && numero2 >=0)
+		    	{
+		    		var resto = 0;
+		    		if(numero1 > numero2)
+		    		{
+		    			while(numero1%numero2 != 0)
+		    			{
+		    				resto = numero1%numero2;
+		    				numero1 = numero2;
+		    				numero2 = resto;
+		    			}
+		    			mostrarMCD(numero2);
+		    		}
+		    		else
+		    		{
+		    			while(numero2%numero1 != 0)
+		    			{
+		    				resto = numero2%numero1;
+		    				numero2 = numero1;
+		    				numero1 = resto;
+		    			}
+		    			mostrarMCD(numero1);
+		    		}
+	    			mostrar_resultado();		
+		    	}
+		    	else
+		    		ocultar_resultado();	    			
+		    }		    
+
+		</script>
+	</body>
+</html>

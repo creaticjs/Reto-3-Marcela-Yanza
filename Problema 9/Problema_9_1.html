@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Problema 9-1</title>
+	</head>
+
+	<body>
+		<center>
+
+		<h1>Problema 9-1</h1>
+			
+			<form onsubmit="return false">
+                <div>
+                	<br>
+                    <button id="btnCalcular" type="submit" name="action">Obtener Conejos</button>
+                    <br>
+                    <br>
+                </div>
+
+                <div id="conejos"></div>
+                <br>
+
+             </form>
+
+		</center>
+
+		<script type="text/javascript">
+
+			var operaciones =
+		    {
+		    	calcularConejos: function()
+		    	{
+		    		return calcularResultado();
+		    	}
+		    }
+
+		    document.getElementById('btnCalcular').addEventListener("click", operaciones.calcularConejos, false);
+
+			ocultar_resultado();
+
+			function ocultar_resultado()
+			{
+				document.getElementById('conejos').style.visibility = 'hidden';
+				document.getElementById('conejos').style.display = 'none';
+			}
+
+			function mostrar_resultado()
+			{
+				document.getElementById('conejos').style.visibility = 'visible';
+				document.getElementById('conejos').style.display = 'block';
+			}
+
+			function mostrarConejos(conejosObtenidos)
+			{
+				document.getElementById('conejos').innerHTML = 
+				'<div class="alert alert-primary" role="alert">' + 
+					'<table>' + 
+						'<thead>' + 
+							'<tr>' + 
+								'<th> Conejos Obtenidos en un año </th>' +
+							'</tr>' + 
+						'</thead>' + 
+						'<tbody>' + 
+							'<tr>' + 
+								'<td>' + conejosObtenidos + '</td>' + 
+							'</tr>' + 
+						'</tbody>' + 
+					'</table>' + 
+				'</div>';
+			}
+
+		    function calcularResultado()
+		    {
+		    	var suma = 1;
+		    	for (var i = 1; i <= 12; i++) 
+		    	{
+		    		suma = 2*suma;
+		    	}
+	    		mostrarConejos(suma);
+	    		mostrar_resultado();	    			
+		    }		    
+
+		</script>
+	</body>
+</html>
